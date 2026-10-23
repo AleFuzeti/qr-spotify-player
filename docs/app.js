@@ -88,19 +88,28 @@
   const sampleCtx = sampleCanvas.getContext('2d', { willReadFrequently: true });
 
   function scanFrame() {
-    if (!isScanningPaused && el.video.readyState === el.video.HAVE_ENOUGH_DATA) {
-      sampleCanvas.width = el.video.videoWidth;
-      sampleCanvas.height = el.video.videoHeight;
-      sampleCtx.drawImage(el.video, 0, 0, sampleCanvas.width, sampleCanvas.height);
+    try {
+      if (
+        !isScanningPaused &&
+        typeof window.jsQR === 'function' &&
+        el.video.readyState === el.video.HAVE_ENOUGH_DATA &&
+        el.video.videoWidth > 0
+      ) {
+        sampleCanvas.width = el.video.videoWidth;
+        sampleCanvas.height = el.video.videoHeight;
+        sampleCtx.drawImage(el.video, 0, 0, sampleCanvas.width, sampleCanvas.height);
 
-      const imageData = sampleCtx.getImageData(0, 0, sampleCanvas.width, sampleCanvas.height);
-      const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
-        inversionAttempts: 'dontInvert',
-      });
+        const imageData = sampleCtx.getImageData(0, 0, sampleCanvas.width, sampleCanvas.height);
+        const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: 'dontInvert',
+        });
 
-      if (code && code.data) {
-        handleScannedText(code.data);
+        if (code && code.data) {
+          handleScannedText(code.data);
+        }
       }
+    } catch (err) {
+      console.error('QR scan frame failed', err);
     }
     scanLoopHandle = requestAnimationFrame(scanFrame);
   }
