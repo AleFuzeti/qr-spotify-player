@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/spotify_black">
+
+    <!-- Hidden player: keeps the Spotify embed + audio running without showing track info -->
+    <WebView
+        android:id="@+id/playerWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
+
+    <!-- Start screen -->
+    <LinearLayout
+        android:id="@+id/startContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spotify_black"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_title"
+            android:textColor="@color/spotify_green"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="64dp"
+            android:gravity="center"
+            android:text="@string/app_subtitle"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/spotify_green"
+            android:text="@string/btn_start"
+            android:textColor="@color/spotify_black"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/quickGameButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/spotify_black"
+            android:strokeColor="@color/spotify_green"
+            android:text="@string/btn_quick_game"
+            android:textColor="@color/spotify_green"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/startLoginButton"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/btn_login"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <!-- Scanner screen -->
+    <FrameLayout
+        android:id="@+id/scannerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/viewFinder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <dev.local.qrspotify.ScannerOverlayView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/closeScannerButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/btn_close"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/white" />
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="16dp"
+            android:backgroundTint="@color/spotify_black"
+            android:text="@string/btn_login"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/scanPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#99000000"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@string/scan_prompt"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </FrameLayout>
+
+    <!-- Now playing screen: deliberately hides title/artist/art -->
+    <FrameLayout
+        android:id="@+id/nowPlayingContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/spotify_black"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="64dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/eqBar1"
+                    android:layout_width="10dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/spotify_green" />
+
+                <View
+                    android:id="@+id/eqBar2"
+                    android:layout_width="10dp"
+                    android:layout_height="48dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/spotify_green" />
+
+                <View
+                    android:id="@+id/eqBar3"
+                    android:layout_width="10dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="6dp"
+                    android:background="@color/spotify_green" />
+
+                <View
+                    android:id="@+id/eqBar4"
+                    android:layout_width="10dp"
+                    android:layout_height="56dp"
+                    android:background="@color/spotify_green" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/nowPlayingLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/now_playing"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/revealedInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:textColor="@color/spotify_green"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:text="Música • Artista (2024)" />
+
+            <Button
+                android:id="@+id/revealButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="48dp"
+                android:backgroundTint="@color/spotify_black"
+                android:strokeColor="@color/spotify_green"
+                android:text="@string/btn_reveal"
+                android:textColor="@color/spotify_green"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/nextCardButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="@color/spotify_green"
+                android:text="@string/btn_next_card"
+                android:textColor="@color/spotify_black"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/openSpotifyButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/btn_open_spotify"
+                android:textColor="@color/spotify_green" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/closeNowPlayingButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/btn_close"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/white" />
+
+    </FrameLayout>
+
+    <!-- Login screen -->
+    <FrameLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <WebView
+            android:id="@+id/loginWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/closeLoginButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|start"
+            android:layout_margin="16dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/btn_close"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:tint="@color/spotify_black" />
+
+    </FrameLayout>
+
+</FrameLayout>

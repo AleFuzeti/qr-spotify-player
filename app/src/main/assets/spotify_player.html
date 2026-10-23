@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spotify Player</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #191414;
+        }
+        #player-container {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="player-container"></div>
+
+    <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+    <script>
+        // Spotify's official, publicly documented Embed IFrame API:
+        // https://developer.spotify.com/documentation/embeds/reference/iframe-api
+        const params = new URLSearchParams(window.location.search);
+        const trackId = params.get('trackId');
+        const autoPlay = params.get('autoPlay') !== '0';
+
+        function notifyAndroid(method, ...args) {
+            if (window.AndroidBridge && typeof window.AndroidBridge[method] === 'function') {
+                window.AndroidBridge[method](...args);
+            }
+        }
+
+        // If the iframe script doesn't signal readiness in time, let the app know.
+        const readyTimeoutMs = 7000;
+        let apiReady = false;
+        window.setTimeout(function () {
+            if (!apiReady) notifyAndroid('onPlayerTimeout');
+        }, readyTimeoutMs);
+
+        window.onSpotifyIframeApiReady = (IFrameAPI) => {
+            apiReady = true;
+            const element = document.getElementById('player-container');
+            const options = {
+                width: '100%',
+                height: '160',
+                uri: 'spotify:track:' + trackId,
+            };
+
+            IFrameAPI.createController(element, options, (EmbedController) => {
+                notifyAndroid('onPlayerReady');
+
+                if (autoPlay) {
+                    EmbedController.play();
+                }
+
+                EmbedController.addListener('playback_update', (e) => {
+                    notifyAndroid('onPlaybackUpdate', e.data.isPaused, e.data.position, e.data.duration);
+                });
+
+                EmbedController.addListener('error', (e) => {
+                    notifyAndroid('onPlayerError', e.data && e.data.code ? e.data.code : 'unknown');
+                });
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">QR Spotify Player</string>
+    <string name="app_title">QR Spotify Player</string>
+    <string name="app_subtitle">Escaneie o código e ouça a prévia no Spotify, sem ver qual é a música</string>
+    <string name="btn_start">Começar a escanear</string>
+    <string name="btn_quick_game">Modo Jogo Rápido</string>
+    <string name="btn_close">Fechar</string>
+    <string name="btn_reveal">Revelar música</string>
+    <string name="reveal_format">%1$s • %2$s (%3$d)</string>
+    <string name="playlist_load_error">Não foi possível carregar a playlist.</string>
+    <string name="playlist_cycle_restart">Todas as músicas já tocaram! Reiniciando o ciclo.</string>
+    <string name="scan_prompt">Aponte a câmera para o QR code</string>
+    <string name="btn_login">Entrar no Spotify</string>
+    <string name="btn_scan_again">Ler outro código</string>
+    <string name="btn_next_card">Próxima carta</string>
+    <string name="btn_open_spotify">Abrir no Spotify</string>
+    <string name="now_playing">Tocando prévia…</string>
+    <string name="permission_denied">Permissão de câmera negada. Ative nas configurações do app.</string>
+    <string name="invalid_qr">QR code não contém um link válido do Spotify.</string>
+</resources>

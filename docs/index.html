@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>QR Spotify Player</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- Start screen -->
+  <section id="startScreen" class="screen center-column">
+    <h1 class="title">QR Spotify Player</h1>
+    <p class="subtitle">Escaneie o código e ouça a prévia no Spotify, sem ver qual é a música</p>
+    <button id="startButton" class="btn btn-primary">Começar a escanear</button>
+    <button id="quickGameButton" class="btn btn-outline">Modo Jogo Rápido</button>
+    <button id="startLoginButton" class="btn btn-text">Entrar no Spotify</button>
+  </section>
+
+  <!-- Scanner screen -->
+  <section id="scannerScreen" class="screen hidden">
+    <video id="video" playsinline autoplay muted></video>
+    <canvas id="overlayCanvas"></canvas>
+    <button id="closeScannerButton" class="icon-btn top-start" aria-label="Fechar">✕</button>
+    <button id="loginButton" class="btn btn-outline top-end">Entrar no Spotify</button>
+    <p id="scanPrompt" class="scan-prompt">Aponte a câmera para o QR code</p>
+  </section>
+
+  <!-- Now playing screen -->
+  <section id="nowPlayingScreen" class="screen hidden">
+    <button id="closeNowPlayingButton" class="icon-btn top-start" aria-label="Fechar">✕</button>
+    <div class="center-column now-playing-content">
+      <div class="equalizer">
+        <span class="bar bar1"></span>
+        <span class="bar bar2"></span>
+        <span class="bar bar3"></span>
+        <span class="bar bar4"></span>
+      </div>
+      <p class="now-playing-label">Tocando prévia…</p>
+      <p id="revealedInfo" class="revealed-info hidden"></p>
+      <button id="revealButton" class="btn btn-outline hidden">Revelar música</button>
+      <button id="nextCardButton" class="btn btn-primary">Próxima carta</button>
+      <button id="openSpotifyButton" class="btn btn-text">Abrir no Spotify</button>
+    </div>
+  </section>
+
+  <!-- Hidden Spotify embed player: keeps audio running without showing track info -->
+  <div id="playerContainer" class="player-hidden"></div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.1/dist/jsQR.js"></script>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+<script src="app.js"></script>
+</body>
+</html>

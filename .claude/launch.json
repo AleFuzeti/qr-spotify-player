@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-I", "-m", "http.server", "8080", "--directory", "docs", "--bind", "127.0.0.1"],
+      "port": 8080
+    }
+  ]
+}
